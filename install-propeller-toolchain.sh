@@ -87,7 +87,6 @@ stamp() {
 	then 
 		echo 1
 	else
-		touch $STAMP_DIR/$1	
 		echo 0
 	fi
 }
@@ -156,6 +155,12 @@ setup() {
 
 instbst() {
 
+	if ! [ "X$MACHINE" = "Xintel" ];
+	then
+		banner "Skipping BST tools install for non intel machine"
+		return
+	fi		
+
 	s=`stamp instbst`
 
 	if [ $s -eq 1 ];
@@ -163,12 +168,6 @@ instbst() {
 		echo "skipping - already done"
 		return 
 	fi
-
-	if ! [ "X$MACHINE" = "Xintel" ];
-	then
-		banner "Skipping BST tools install for non intel machine"
-		return
-	fi		
 
 	cd $DL_DIR || dir "Unable to CD to $DL_DIR"
 
@@ -209,9 +208,8 @@ instgcc() {
 	if [ $s -eq 1 ];
 	then 
 		echo "skipping hg clone - already done"
-		return 
-	else:
-		hg clone $URL_HG_PROPGCC propgcc 2>&1 >> $LOG || die "Unable to clone propgcc"
+	else
+		hg clone $URL_HG_PROPGCC propgcc # 2>&1 >> $LOG || die "Unable to clone propgcc"
 
 		stampdone instgcc.hg
 	fi
@@ -221,8 +219,7 @@ instgcc() {
 	if [ $s -eq 1 ];
 	then 
 		echo "skipping building - already done"
-		return 
-	else:
+	else
 		cd ./propgcc || die "Unable to CD to propgcc"
 
 		export PATH=$INST_DIR/bin:$PATH

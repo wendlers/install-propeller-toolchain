@@ -1,5 +1,5 @@
-Parallax Toolchain Installer Script
-===================================
+Parallax Toolchain Installer Script for Linux
+=============================================
 
 (c) 2012 Stefan Wendler
 sw@kaltpost.de
@@ -28,6 +28,7 @@ Requirements
 ------------
 
 * A working GCC environment on the host system you are building is required.
+* Mercurial needs to be installed.
 * Internet conenction is required.
 
 
