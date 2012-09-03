@@ -24,6 +24,16 @@ Next, it will clone the Propeller GCC sources.
 For more information on porp GCC see the [propgcc homepage] (http://code.google.com/p/propgcc/)
 
 
+Non Intel Build Hosts
+---------------------
+
+Using this scripts on a non intel build host does only work patially. This is because the
+propeller-loader tool releays on the bstc.linux binary which is a intel binary. At the moment
+the loader fails to build, no poropeller-gdb will be build since it relais on the loader library.
+However, on a ARM machine you will end up with a working propeller-gcc including wirkin C-libraries
+and binutils, but you will not get the loader nor gdb. 
+
+
 Requirements
 ------------
 

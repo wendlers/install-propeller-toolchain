@@ -25,6 +25,10 @@
 ##
 BASE_DIR=$PWD
 
+. $PWD/config.inc
+
+echo "$JBUILD_OPTS"
+exit 0
 ##
 # log file for the whole thing
 ##
@@ -70,7 +74,6 @@ die() {
 	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 	echo "$1"
 	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-	tput sgr0
 	exit 1
 }
 
@@ -78,9 +81,15 @@ banner() {
 	echo "-------------------------------------------------------------------------------"
 	echo "$1"
 	echo "-------------------------------------------------------------------------------"
-	tput sgr0
 }
 
+banner_bold() {
+	echo "*******************************************************************************"
+	echo "*******************************************************************************"
+	echo "$1"
+	echo "*******************************************************************************"
+	echo "*******************************************************************************"
+}
 stamp() {
 	
 	if [ -f $STAMP_DIR/$1 ];
@@ -130,7 +139,7 @@ setup() {
 
 	if [ $s -eq 1 ];
 	then 
-		echo "skipping - already done"
+		echo "NOTE: skipping - already done"
 		return 
 	fi
 
@@ -155,11 +164,18 @@ setup() {
 
 instbst() {
 
+	banner "Installing BST tools"
+
 	if ! [ "X$MACHINE" = "Xintel" ];
 	then
-		banner "Skipping BST tools install for non intel machine"
+		echo "NOTE: Skipping BST tools install for non intel machine"
+		echo "NOTE: most likely your machine will fail building propeller-loader"
+		echo "NOTE: no propeller-loader prevents building propeller-gdb"
+		echo "NOTE: however, a usable propeller-gcc with libs and binutils will be installed"
 		return
 	fi		
+
+	banner "Downloading BST tools"
 
 	s=`stamp instbst`
 
@@ -170,8 +186,6 @@ instbst() {
 	fi
 
 	cd $DL_DIR || dir "Unable to CD to $DL_DIR"
-
-	banner "Downloading BST tools"
 
 	wget -q $URL_BSTC    2>&1 >> $LOG || die "Unable to get bstc"
 	wget -q $URL_BSTL    2>&1 >> $LOG || die "Unable to get bstl"
@@ -201,13 +215,13 @@ instgcc() {
 	
 	cd $BASE_DIR
 
-	banner "Cloning propgcc"
+	banner "Cloning, compiling and Installing propgcc, may take very looooong time ..."
 
 	s=`stamp instgcc.hg`
 
 	if [ $s -eq 1 ];
 	then 
-		echo "skipping hg clone - already done"
+		echo "NOTE: skipping hg clone - already done"
 	else
 		hg clone $URL_HG_PROPGCC propgcc # 2>&1 >> $LOG || die "Unable to clone propgcc"
 
@@ -218,15 +232,13 @@ instgcc() {
 
 	if [ $s -eq 1 ];
 	then 
-		echo "skipping building - already done"
+		echo "NOTE: skipping building - already done"
 	else
 		cd ./propgcc || die "Unable to CD to propgcc"
 
 		export PATH=$INST_DIR/bin:$PATH
 
-		banner "Building propgcc - may take loooong time"
-
-		./rebuild.sh >> $LOG 2>> $LOG
+		./jbuild.sh $JBUILD_OPTS >> $LOG 2>> $LOG
 
 		stampdone instgcc.build
 	fi
@@ -251,13 +263,13 @@ then
 	exit 1
 fi
 
-banner "Installing BST tools and propgcc"
+banner_bold "Installing BST tools and propgcc"
 
 detectp
 setup
 instbst
 instgcc
 
-banner "BST tools and propgcc installed successfully\n\rIt may be a good idea to add $INST_DIR/bin to your path"
+banner_bold "NOTE: BST tools and propgcc installed successfully to $INST_DIR\n\rNOTE: See $LOG for details.\n\rNOTE: It may be a good idea to add $INST_DIR/bin to your path."
 
 exit 0
