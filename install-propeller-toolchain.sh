@@ -27,8 +27,6 @@ BASE_DIR=$PWD
 
 . $PWD/config.inc
 
-echo "$JBUILD_OPTS"
-exit 0
 ##
 # log file for the whole thing
 ##
