@@ -244,7 +244,7 @@ instgcc() {
 
 clean() {
 
-	banner "Cleaning up all TMP stuff"
+	banner_bold "Cleaning up all TMP stuff"
 
 	cd $BASE_DIR
 
