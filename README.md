@@ -33,6 +33,9 @@ the loader fails to build, no poropeller-gdb will be build since it relais on th
 However, on a ARM machine you will end up with a working propeller-gcc including wirkin C-libraries
 and binutils, but you will not get the loader nor gdb. 
 
+However, it is possible to copy the SPIN binaries genarated on a intel platform to the non 
+intel build host, and make propeller-loader and gdb compile. If you like to try that, you
+could enable "USE_LOADER_HACK" in the "config.inc" file.
 
 Requirements
 ------------
@@ -44,6 +47,8 @@ Requirements
 
 Usage
 -----
+
+For various user setting see "config.inc".
 
 To build and install the whole toolchain:
 

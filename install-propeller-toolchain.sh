@@ -48,6 +48,11 @@ INST_DIR=/opt/parallax
 STAMP_DIR=$BASE_DIR/stamp
 
 ##
+# patches
+##
+PATCH_DIR=$BASE_DIR/patches
+
+##
 # user and group to set for $INST_DIR
 ##
 INST_USR=$USER
@@ -167,9 +172,13 @@ instbst() {
 	if ! [ "X$MACHINE" = "Xintel" ];
 	then
 		echo "NOTE: Skipping BST tools install for non intel machine"
-		echo "NOTE: most likely your machine will fail building propeller-loader"
-		echo "NOTE: no propeller-loader prevents building propeller-gdb"
-		echo "NOTE: however, a usable propeller-gcc with libs and binutils will be installed"
+
+		if [ "X$USE_LOADER_HACK" = "X" ];
+		then
+			echo "NOTE: most likely your machine will fail building propeller-loader"
+			echo "NOTE: no propeller-loader prevents building propeller-gdb"
+			echo "NOTE: however, a usable propeller-gcc with libs and binutils will be installed"
+		fi
 		return
 	fi		
 
@@ -206,6 +215,8 @@ instbst() {
 	ln -s bst.linux bst
 	ln -s PropBasic-bst.linux PropBasic-bst	
 
+	## TODO: install propeller font ...
+
 	stampdone instbst
 }
 
@@ -213,7 +224,24 @@ instgcc() {
 	
 	cd $BASE_DIR
 
-	banner "Cloning, compiling and Installing propgcc, may take very looooong time ..."
+	banner "Cloning, compiling and installing propgcc, may take very looooong time ..."
+
+	if [ "X$USE_LOADER_HACK" = "X1" ];
+	then
+
+		echo "NOTE: propeller-loader hack enabled."
+		echo "NOTE: this will copy some prebuild SPIN-binaries to the build path."
+		echo "NOTE: using the hack may fail, but if it works, propeller-loader and gdb are build."
+
+		s=`stamp instgcc.lhack`
+		if [ $s -eq 1 ];
+		then 
+			echo "NOTE: skipping loader hack copy - already done"
+		else
+			cp -a $PATCH_DIR/build $BASE_DIR 
+			stampdone instgcc.lhack
+		fi
+	fi
 
 	s=`stamp instgcc.hg`
 
@@ -221,7 +249,7 @@ instgcc() {
 	then 
 		echo "NOTE: skipping hg clone - already done"
 	else
-		hg clone $URL_HG_PROPGCC propgcc # 2>&1 >> $LOG || die "Unable to clone propgcc"
+		hg clone $URL_HG_PROPGCC propgcc 2>&1 >> $LOG || die "Unable to clone propgcc"
 
 		stampdone instgcc.hg
 	fi
@@ -265,8 +293,16 @@ banner_bold "Installing BST tools and propgcc"
 
 detectp
 setup
-instbst
-instgcc
+
+if [ $INSTALL_BST = 1 ];
+then
+	instbst
+fi
+
+if [ $INSTALL_BST = 1 ];
+then
+	instgcc
+fi
 
 banner_bold "NOTE: BST tools and propgcc installed successfully to $INST_DIR\n\rNOTE: See $LOG for details.\n\rNOTE: It may be a good idea to add $INST_DIR/bin to your path."
 
