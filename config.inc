@@ -16,9 +16,9 @@ INSTALL_GCC=1
 ##
 # jbuild.sh options:
 # (1) number of make threads (-j)
-# (2) rm for clean buil
+# (2) rm for clean build - will not work with "USE_LOADER_HACK=1"
 ##
-JBUILD_OPTS="$NUM_OF_PARMAKE rm"
+JBUILD_OPTS="$NUM_OF_PARMAKE"
 
 ##
 # use the porpeller-loader hack (only needed for NON-Intel machines)
