@@ -1,0 +1,5 @@
+Vim sytax highlightning for SPIN as posted in the Parallax forums by Andrey Demenev:
+
+http://forums.parallax.com/showthread.php?118328-Spin-syntax-definition-for-Vim
+
+Put "syntax" and "ftdetect" into your "~/.vim" directory.

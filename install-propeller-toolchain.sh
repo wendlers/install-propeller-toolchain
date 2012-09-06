@@ -188,30 +188,28 @@ instbst() {
 
 	cd $DL_DIR || dir "Unable to CD to $DL_DIR"
 
-	wget -q $URL_BSTC    2>&1 >> $LOG || die "Unable to get bstc"
-	wget -q $URL_BSTL    2>&1 >> $LOG || die "Unable to get bstl"
-	wget -q $URL_BST     2>&1 >> $LOG || die "Unable to get bst"
-	wget -q $URL_PROPBAS 2>&1 >> $LOG || die "Unable to get PropellerBASIC"
+	wget -q $URL_BSTC    2>> $LOG >> $LOG || die "Unable to get bstc"
+	wget -q $URL_BSTL    2>> $LOG >> $LOG || die "Unable to get bstl"
+	wget -q $URL_BST     2>> $LOG >> $LOG || die "Unable to get bst"
+	wget -q $URL_PROPBAS 2>> $LOG >> $LOG || die "Unable to get PropellerBASIC"
 
 	cd $INST_DIR/bin || dir "Unable to CD to $TMP_DIR"
 
-	banner "Extracting BST tools"
-
 	for z in $DL_DIR/*.zip; 
 	do
-		unzip $z 2>&1 >> $LOG || die "Unable to unzip $z"
+		unzip -o $z 2>> $LOG >> $LOG || die "Unable to unzip $z"
 	done 
 
 	cd $INST_DIR/bin
 
-	ln -s bstc.linux bstc
-	ln -s bstl.linux bstl
-	ln -s bst.linux bst
-	ln -s PropBasic-bst.linux PropBasic-bst	
+	ln -s bstc.linux bstc &> /dev/null
+	ln -s bstl.linux bstl &> /dev/null
+	ln -s bst.linux bst   &> /dev/null
+	ln -s PropBasic-bst.linux PropBasic-bst &> /dev/null	
 
 	cd $DL_DIR || die "Unable to CD to $DL_DIR" 
 
-	wget -q --content-disposition "$URL_FONT" 2>&1 >> $LOG || die "Unable to get Parallax TTF"
+	wget -q --content-disposition "$URL_FONT" 2>> $LOG >> $LOG || die "Unable to get Parallax TTF"
 
 	if ! [ -d $FONT_DIR ]; 
 	then
@@ -220,8 +218,8 @@ instbst() {
 
 	cd $FONT_DIR || die "Unable to CD to $FONT_DIR"
  
-	sudo unzip $DL_DIR/Parallax.ttf.zip || die "Unable to extract Parallax TTF"
-	sudo fc-cache -f -v . || die "Unable to update font cache"
+	sudo unzip -o $DL_DIR/Parallax.ttf.zip 2>> $LOG >> $LOG || die "Unable to extract Parallax TTF"
+	sudo fc-cache -f -v . 2>> $LOG >> $LOG || die "Unable to update font cache"
 
 	stampdone instbst
 }
@@ -238,7 +236,7 @@ instspin() {
 	then 
 		echo "NOTE: Skipping svn checkout - already done"
 	else
-		svn checkout http://open-source-spin-compiler.googlecode.com/svn/ open-source-spin-compiler 2>&1 >> $LOG || die "Unable to checkout spin"
+		svn checkout http://open-source-spin-compiler.googlecode.com/svn/ open-source-spin-compiler 2>> $LOG >> $LOG || die "Unable to checkout spin"
 		stampdone instspin.svn
 	fi
 
@@ -286,7 +284,7 @@ instgcc() {
 	then 
 		echo "NOTE: Skipping hg clone - already done"
 	else
-		hg clone $URL_HG_PROPGCC propgcc 2>&1 >> $LOG || die "Unable to clone propgcc"
+		hg clone $URL_HG_PROPGCC propgcc 2>> $LOG >> $LOG || die "Unable to clone propgcc"
 
 		stampdone instgcc.hg
 	fi
@@ -318,7 +316,7 @@ instgcc() {
 
 		export PATH=$INST_DIR/bin:$PATH
 
-		./jbuild.sh $JBUILD_OPTS >> $LOG 2>> $LOG
+		./jbuild.sh $JBUILD_OPTS 2>> $LOG >> $LOG
 
 		if ! [ "X$MACHINE" = "Xintel" ];
 		then

@@ -4,7 +4,7 @@ SPINL = bstl
 all: blink.binary 
 
 blink.binary: blink.spin 
-	$(SPINC) $< -o $@
+	$(SPINC) -b $< 
 
 load: blink.binary 
 	$(SPINL) $< 
