@@ -14,6 +14,10 @@
 # 
 #   	http://www.fnarfbargle.com/bst.html
 #
+# For more information on the open source spin compiler see the project page:
+#	
+#		http://code.google.com/p/open-source-spin-compiler/
+#
 # For more information on porp GCC see the propgcc homepage:
 #
 #		http://code.google.com/p/propgcc/
@@ -59,39 +63,29 @@ INST_USR=$USER
 INST_GROUP=$USER
 
 ##
-# BST tools source URLs
+# Machine (autodetected later) for which we build
 ##
-URL_BSTC=http://www.fnarfbargle.com/bst/bstc/Latest/bstc-0.15.3.linux.zip
-URL_BSTL=http://www.fnarfbargle.com/bst/bstl/Latest/bstl.linux.zip
-URL_BST=http://www.fnarfbargle.com/bst/Latest/bst-0.19.3.linux.zip
-URL_PROPBAS=http://www.fnarfbargle.com/PropBasic/PropBasic-bst-00.01.14-79.linux.zip
-
-##
-# URL for mercurial repo of propgcc
-##
-URL_HG_PROPGCC=https://code.google.com/p/propgcc/
-
 MACHINE="UNKNOWN"
 
 die() {
-	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 	echo "$1"
-	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 	exit 1
 }
 
 banner() {
-	echo "-------------------------------------------------------------------------------"
+	echo "------------------------------------------------------------------------------------"
 	echo "$1"
-	echo "-------------------------------------------------------------------------------"
+	echo "------------------------------------------------------------------------------------"
 }
 
 banner_bold() {
-	echo "*******************************************************************************"
-	echo "*******************************************************************************"
+	echo "************************************************************************************"
+	echo "************************************************************************************"
 	echo "$1"
-	echo "*******************************************************************************"
-	echo "*******************************************************************************"
+	echo "************************************************************************************"
+	echo "************************************************************************************"
 }
 stamp() {
 	
@@ -142,7 +136,7 @@ setup() {
 
 	if [ $s -eq 1 ];
 	then 
-		echo "NOTE: skipping - already done"
+		echo "NOTE: Skipping setup - already done"
 		return 
 	fi
 
@@ -167,7 +161,9 @@ setup() {
 
 instbst() {
 
-	banner "Installing BST tools"
+	cd $BASE_DIR
+
+	banner "Downloading and installing BST tools"
 
 	if ! [ "X$MACHINE" = "Xintel" ];
 	then
@@ -182,13 +178,11 @@ instbst() {
 		return
 	fi		
 
-	banner "Downloading BST tools"
-
 	s=`stamp instbst`
 
 	if [ $s -eq 1 ];
 	then 
-		echo "skipping - already done"
+		echo "NOTE: Skipping BST tools - already done"
 		return 
 	fi
 
@@ -215,9 +209,69 @@ instbst() {
 	ln -s bst.linux bst
 	ln -s PropBasic-bst.linux PropBasic-bst	
 
-	## TODO: install propeller font ...
+	cd $DL_DIR || die "Unable to CD to $DL_DIR" 
+
+	wget -q --content-disposition "$URL_FONT" 2>&1 >> $LOG || die "Unable to get Parallax TTF"
+
+	if ! [ -d $FONT_DIR ]; 
+	then
+		sudo mkdir $FONT_DIR || die "Unable to create $FONT_DIR" 	
+	fi
+
+	cd $FONT_DIR || die "Unable to CD to $FONT_DIR"
+ 
+	sudo unzip $DL_DIR/Parallax.ttf.zip || die "Unable to extract Parallax TTF"
+	sudo fc-cache -f -v . || die "Unable to update font cache"
 
 	stampdone instbst
+}
+
+instspin() {
+
+	cd $BASE_DIR
+
+	banner "Installing open-source-spin-compiler"
+
+	s=`stamp instspin.svn`
+
+	if [ $s -eq 1 ];
+	then 
+		echo "NOTE: Skipping svn checkout - already done"
+	else
+		svn checkout http://open-source-spin-compiler.googlecode.com/svn/ open-source-spin-compiler 2>&1 >> $LOG || die "Unable to checkout spin"
+		stampdone instspin.svn
+	fi
+
+	s=`stamp instspin.build`
+
+	if [ $s -eq 1 ];
+	then 
+		echo "NOTE: Skipping build - already done"
+	else
+		cd $BASE_DIR/open-source-spin-compiler
+		make 2>> $LOG >> $LOG || die "Build Failed"
+		cp spin $INST_DIR/bin/. || die "Unable to copy binary to $INST_BIN/bin"
+		stampdone instspin.build
+	fi
+}
+
+instspinloader() {
+
+	cd $BASE_DIR
+
+	banner "Installing python based spin loader"
+
+	s=`stamp instspinloader`
+
+	if [ $s -eq 1 ];
+	then 
+		echo "NOTE: Skipping svn checkout - already done"
+		return
+	fi
+
+	cp $PATCH_DIR/spinloader $INST_DIR/bin/. || die "Unable to install spinloader to $INST_DIR/bin"
+ 	
+	stampdone instspinloader
 }
 
 instgcc() {
@@ -225,6 +279,17 @@ instgcc() {
 	cd $BASE_DIR
 
 	banner "Cloning, compiling and installing propgcc, may take very looooong time ..."
+
+	s=`stamp instgcc.hg`
+
+	if [ $s -eq 1 ];
+	then 
+		echo "NOTE: Skipping hg clone - already done"
+	else
+		hg clone $URL_HG_PROPGCC propgcc 2>&1 >> $LOG || die "Unable to clone propgcc"
+
+		stampdone instgcc.hg
+	fi
 
 	if [ "X$USE_LOADER_HACK" = "X1" ];
 	then
@@ -236,35 +301,33 @@ instgcc() {
 		s=`stamp instgcc.lhack`
 		if [ $s -eq 1 ];
 		then 
-			echo "NOTE: skipping loader hack copy - already done"
+			echo "NOTE: Skipping loader hack copy - already done"
 		else
-			cp -a $PATCH_DIR/build $BASE_DIR 
+			cp -r $PATCH_DIR/build $BASE_DIR 
 			stampdone instgcc.lhack
 		fi
-	fi
-
-	s=`stamp instgcc.hg`
-
-	if [ $s -eq 1 ];
-	then 
-		echo "NOTE: skipping hg clone - already done"
-	else
-		hg clone $URL_HG_PROPGCC propgcc 2>&1 >> $LOG || die "Unable to clone propgcc"
-
-		stampdone instgcc.hg
 	fi
 
 	s=`stamp instgcc.build`
 
 	if [ $s -eq 1 ];
 	then 
-		echo "NOTE: skipping building - already done"
+		echo "NOTE: Skipping building - already done"
 	else
 		cd ./propgcc || die "Unable to CD to propgcc"
 
 		export PATH=$INST_DIR/bin:$PATH
 
 		./jbuild.sh $JBUILD_OPTS >> $LOG 2>> $LOG
+
+		if ! [ "X$MACHINE" = "Xintel" ];
+		then
+			# on non-intel machine remove usless intel binary of bstc
+			if [ -f $INST_DIR/bin/bstc.linux ];
+			then
+				rm $INST_DIR/bin/bstc.linux
+			fi
+		fi
 
 		stampdone instgcc.build
 	fi
@@ -280,6 +343,7 @@ clean() {
 	rm -fr $STAMP_DIR
 	rm -fr propgcc
 	rm -fr build
+	rm -fr open-source-spin-compiler
 	rm $LOG 2> /dev/null
 }
 
@@ -297,6 +361,16 @@ setup
 if [ $INSTALL_BST = 1 ];
 then
 	instbst
+fi
+
+if [ $INSTALL_OSSPIN = 1 ];
+then
+	instspin
+fi
+
+if [ $INSTALL_SPINLOADER = 1 ];
+then
+	instspinloader
 fi
 
 if [ $INSTALL_BST = 1 ];
