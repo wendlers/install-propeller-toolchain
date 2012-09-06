@@ -1,4 +1,4 @@
-Parallax Tool-chain Installer Script for Linux
+Parallax Tool-Chain Installer Script for Linux
 =============================================
 
 (c) 2012 Stefan Wendler
