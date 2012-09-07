@@ -141,6 +141,7 @@ setup() {
 	fi
 
 	chkbin wget
+	chkbin svn 
 	chkbin hg
 	chkbin sudo 
 
