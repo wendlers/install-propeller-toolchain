@@ -332,6 +332,39 @@ instgcc() {
 	fi
 }
 
+instspin2cpp() {
+	
+	cd $BASE_DIR
+
+	banner "Cloning, compiling and installing spin2cpp, may take some time ..."
+
+	s=`stamp instspin2cpp.hg`
+
+	if [ $s -eq 1 ];
+	then 
+		echo "NOTE: Skipping hg clone - already done"
+	else
+		hg clone $URL_HG_SPIN2CPP spin2cpp 2>> $LOG >> $LOG || die "Unable to clone spin2cpp"
+
+		stampdone instspin2cpp.hg
+	fi
+
+	s=`stamp instspin2cpp.build`
+
+	if [ $s -eq 1 ];
+	then 
+		echo "NOTE: Skipping building - already done"
+	else
+		cd ./spin2cpp || die "Unable to CD to spin2cpp"
+
+		make 2>> $LOG >> $LOG || die "Unable to compile spin2cpp"
+
+		install -m 755 spin2cpp $INST_DIR/bin/.  
+		stampdone instspin2cpp.build
+	fi
+}
+
+
 clean() {
 
 	banner_bold "Cleaning up all TMP stuff"
@@ -375,6 +408,11 @@ fi
 if [ $INSTALL_BST = 1 ];
 then
 	instgcc
+fi
+
+if [ $INSTALL_SPIN2CPP = 1 ];
+then
+	instspin2cpp
 fi
 
 banner_bold "NOTE: BST tools and propgcc installed successfully to $INST_DIR\n\rNOTE: See $LOG for details.\n\rNOTE: It may be a good idea to add $INST_DIR/bin to your path."

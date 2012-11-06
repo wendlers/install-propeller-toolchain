@@ -19,6 +19,9 @@ INSTALL_SPINLOADER=1
 # install propeller gcc
 INSTALL_GCC=1
 
+# install spin2cpp
+INSTALL_SPIN2CPP=1
+
 ##
 # jbuild.sh options:
 # (1) number of make threads (-j)
@@ -29,7 +32,7 @@ JBUILD_OPTS="$NUM_OF_PARMAKE"
 ##
 # use the porpeller-loader hack (only needed for NON-Intel machines)
 ##
-USE_LOADER_HACK=0
+USE_LOADER_HACK=1
 
 ##
 # X11 customfont install location for BST
@@ -49,4 +52,9 @@ URL_FONT="http://forums.parallax.com/attachment.php?attachmentid=53903&d=1212437
 # URL for mercurial repo of propgcc
 ##
 URL_HG_PROPGCC=https://code.google.com/p/propgcc/
+
+##
+# URL for mercurial repo of spin2cpp
+##
+URL_HG_SPIN2CPP=https://code.google.com/p/spin2cpp/
 
