@@ -149,6 +149,8 @@ setup() {
 
 	rm -fr $DL_DIR/* 2> /dev/null 
 	rm -fr propgcc 2> /dev/null 
+	rm -fr spin2cpp 2> /dev/null 
+	rm -fr open-source-spin-compiler 2> /dev/null
 
 	sudo rm -fr $INST_DIR 2> /dev/null	
 	sudo mkdir $INST_DIR
