@@ -42,19 +42,19 @@ FONT_DIR=/usr/share/fonts/truetype/parallax
 ##
 # BST tools source URLs
 ##
-URL_BSTC=http://www.fnarfbargle.com/bst/bstc/Latest/bstc-0.15.3.linux.zip
-URL_BSTL=http://www.fnarfbargle.com/bst/bstl/Latest/bstl.linux.zip
-URL_BST=http://www.fnarfbargle.com/bst/Latest/bst-0.19.3.linux.zip
-URL_PROPBAS=http://www.fnarfbargle.com/PropBasic/PropBasic-bst-00.01.14-79.linux.zip
+URL_BSTC="http://www.fnarfbargle.com/bst/bstc/Latest/bstc-0.15.3.linux.zip"
+URL_BSTL="http://www.fnarfbargle.com/bst/bstl/Latest/bstl.linux.zip"
+URL_BST="http://www.fnarfbargle.com/bst/Latest/bst-0.19.3.linux.zip"
+URL_PROPBAS="http://www.fnarfbargle.com/PropBasic/PropBasic-bst-00.01.14-79.linux.zip"
 URL_FONT="http://forums.parallax.com/attachment.php?attachmentid=53903&d=1212437073"
 
 ##
 # URL for mercurial repo of propgcc
 ##
-URL_HG_PROPGCC=https://code.google.com/p/propgcc/
+URL_HG_PROPGCC="https://code.google.com/p/propgcc/"
 
 ##
 # URL for mercurial repo of spin2cpp
 ##
-URL_HG_SPIN2CPP=https://code.google.com/p/spin2cpp/
+URL_HG_SPIN2CPP="https://code.google.com/p/spin2cpp/"
 

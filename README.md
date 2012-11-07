@@ -9,12 +9,13 @@ http://gpio.kaltpost.de/
 Introduction
 ------------
 
-Simple shell script to install Parallax-Propeller tool-chain, including:
+Simple shell script to install a Parallax-Propeller tool-chain, including:
 
 * BST tools (compiler, PropBasic, loader, IDE + Propeller TTF)
 * Propeller GCC 
 * open-source-spin-compiler
 * Python based spin-loader from the propeller forums (Loader.py)
+* spin2cpp, a SPIN to C++ compiler
 
 
 For more information on the BST tools see this the [BST homepage] (http://www.fnarfbargle.com/bst.html)
@@ -23,8 +24,10 @@ For more information on porp GCC see the [propgcc homepage] (http://code.google.
 
 For more information on the open-source-spin-compiler see the [project page] (http://code.google.com/p/open-source-spin-compiler/)
 
-The Python based loader is from Remy Blank and I was not able to find a webpage for that tool.
+The Python based loader is from Remy Blank and I was not able to find a web-page for that tool.
  
+For more information on spin2cpp see the [project page] (http://code.google.com/p/spin2cpp/)
+
 
 Non Intel Build Hosts
 ---------------------
@@ -126,4 +129,18 @@ compile, to compile and upload your program.
 
 Note: in the editor, check if the font looks "right" otherwise something went wrong
 withe the installation of the Propeller TTF-font.
+
+*Check spin2cpp*
+
+Change to "s2cpptest" subdirectory containing a simple SPIN program which blinks the LED on 
+P16:
+
+	cd ./s2cpptest
+	export PATH=/opt/parallax/bin:$PATH
+	make
+
+This should produce a "blinky.h", "blink.cpp" and the "blink.elf" binary from the file
+"blink.spin". Load this to the propeller with:
+
+	make load
 
