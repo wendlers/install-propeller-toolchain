@@ -373,11 +373,12 @@ clean() {
 
 	cd $BASE_DIR
 
-	rm -fr $DL_DIR
-	rm -fr $STAMP_DIR
-	rm -fr propgcc
-	rm -fr build
-	rm -fr open-source-spin-compiler
+	rm -fr $DL_DIR 2> /dev/null
+	rm -fr $STAMP_DIR 2> /dev/null
+	rm -fr propgcc 2> /dev/null
+	rm -fr build 2> /dev/null
+	rm -fr open-source-spin-compiler 2> /dev/null
+	rm -fr spin2cpp 2> /dev/null 
 	rm $LOG 2> /dev/null
 }
 

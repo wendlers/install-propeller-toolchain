@@ -76,11 +76,11 @@ Check the Result
 
 *Check Propeller GCC*
 
-Change to the "gcctest" subdirectory containing a simple "hello-world" which blinks all the build in 
+Change to the "tests/gcc" subdirectory containing a simple "hello-world" which blinks all the build in 
 LEDs of the Parallax Quick-Start board and prints out some message through the serial line and build 
 the sources:
 
-	cd ./gcctest
+	cd ./tests/gcc
 	export PATH=/opt/parallax/bin:$PATH
 	make
 
@@ -91,10 +91,10 @@ This should produce a "main.elf" binary. Load this to the propeller with:
 
 *Check open-source-spin-compiler and spin-loader*
 
-Change to "spintest/osspin" subdirectory containing a simple SPIN program which blinks the LED on 
+Change to "test/spin/oss" subdirectory containing a simple SPIN program which blinks the LED on 
 P16:
 
-	cd ./spintest/osspin
+	cd ./tests/spin/oss
 	export PATH=/opt/parallax/bin:$PATH
 	make
 
@@ -105,10 +105,10 @@ This should produce a "blinky.binary" binary. Load this to the propeller with:
 
 *Check BST Spin Command-line*
 
-Change to "spintest/bstspin" subdirectory containing a simple SPIN program which blinks the LED on 
+Change to "test/spin/bst" subdirectory containing a simple SPIN program which blinks the LED on 
 P16:
 
-	cd ./spintest/bstspin
+	cd ./test/spin/bst
 	export PATH=/opt/parallax/bin:$PATH
 	make
 
@@ -132,10 +132,10 @@ withe the installation of the Propeller TTF-font.
 
 *Check spin2cpp*
 
-Change to "s2cpptest" subdirectory containing a simple SPIN program which blinks the LED on 
+Change to "tests/spin2cpp" subdirectory containing a simple SPIN program which blinks the LED on 
 P16:
 
-	cd ./s2cpptest
+	cd ./tests/spin2cpp
 	export PATH=/opt/parallax/bin:$PATH
 	make
 
@@ -143,4 +143,3 @@ This should produce a "blinky.h", "blink.cpp" and the "blink.elf" binary from th
 "blink.spin". Load this to the propeller with:
 
 	make load
-
