@@ -393,13 +393,16 @@ then
 	die "No valid action given. Use one of: clean, install"
 fi
 
-echo "WARNING: This will remove and reinstall the toolchain located under $INST_DIR!"
-echo -n "Continue? [y/n]: "
-read sure 
-
-if ! [ "X$sure" = "Xy" ];
+if [ -d $INST_DIR ];
 then
-  die "Aborted by user"
+	echo "WARNING: This will remove and reinstall the toolchain located under $INST_DIR!"
+	echo -n "Continue? [y/n]: "
+	read sure 
+
+	if ! [ "X$sure" = "Xy" ];
+	then
+  		die "Aborted by user"
+	fi
 fi
 
 banner_bold "Installing BST tools and propgcc"
