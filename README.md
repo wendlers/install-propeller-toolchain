@@ -60,9 +60,11 @@ For various user setting see "config.inc".
 
 To build and install the whole tool-chain:
 
-	./install-propeller-toolchain.sh
+	./install-propeller-toolchain.sh install
 
 NOTE: the script may ask you for your root password to make the install dir with "sudo".
+
+NOTE: the script removes everything installed previously under "/opt/parallax/bin".
 
 After the script installed everything, you might want to add "/opt/parallax/bin" to your path.
 

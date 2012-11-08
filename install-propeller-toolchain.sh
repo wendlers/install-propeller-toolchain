@@ -292,7 +292,7 @@ instgcc() {
 		stampdone instgcc.hg
 	fi
 
-	if [ "X$USE_LOADER_HACK" = "X1" ];
+	if [ "X$USE_LOADER_HACK" = "X1" ] && ! [ "X$MACHINE" = "Xintel" ];
 	then
 
 		echo "NOTE: propeller-loader hack enabled."
@@ -385,7 +385,21 @@ clean() {
 if [ "X$1" = "Xclean" ];
 then
 	clean
-	exit 1
+	exit 0
+fi
+
+if ! [ "X$1" = "Xinstall" ];
+then
+	die "No valid action given. Use one of: clean, install"
+fi
+
+echo "WARNING: This will remove and reinstall the toolchain located under $INST_DIR!"
+echo -n "Continue? [y/n]: "
+read sure 
+
+if ! [ "X$sure" = "Xy" ];
+then
+  die "Aborted by user"
 fi
 
 banner_bold "Installing BST tools and propgcc"
