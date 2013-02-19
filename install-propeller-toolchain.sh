@@ -102,7 +102,7 @@ stampdone() {
 }
 
 chkbin() {
-	which $1 > /dev/null || die "$1 not found in path"
+	which $1 > /dev/null || die "$1 not found in path ($2)"
 }
 
 mdine() {
@@ -140,10 +140,10 @@ setup() {
 		return 
 	fi
 
-	chkbin wget
-	chkbin svn 
-	chkbin hg
-	chkbin sudo 
+	chkbin wget "on Debian/Ubuntu try: sudo apt-get install wget"
+	chkbin svn "on Debian/Ubuntu try: sudo apt-get install subversion"
+	chkbin hg "on Debian/Ubuntu try: sudo apt-get install mercurial"
+	chkbin sudo "on Debian/Ubuntu try as root: apt-get install sudo" 
 
 	mdine $DL_DIR
 
