@@ -23,16 +23,9 @@ INSTALL_GCC=1
 INSTALL_SPIN2CPP=1
 
 ##
-# jbuild.sh options:
-# (1) number of make threads (-j)
-# (2) rm for clean build - will not work with "USE_LOADER_HACK=1"
+# propgcc options:
 ##
-JBUILD_OPTS="$NUM_OF_PARMAKE"
-
-##
-# use the porpeller-loader hack (only needed for NON-Intel machines)
-##
-USE_LOADER_HACK=1
+MAKE_OPTS="-j$NUM_OF_PARMAKE"
 
 ##
 # X11 customfont install location for BST

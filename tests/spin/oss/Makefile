@@ -1,4 +1,4 @@
-SPINC = spin 
+SPINC = openspin 
 SPINL = spinloader
 
 all: blink.binary 

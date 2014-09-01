@@ -171,13 +171,6 @@ instbst() {
 	if ! [ "X$MACHINE" = "Xintel" ];
 	then
 		echo "NOTE: Skipping BST tools install for non intel machine"
-
-		if [ "X$USE_LOADER_HACK" = "X" ];
-		then
-			echo "NOTE: most likely your machine will fail building propeller-loader"
-			echo "NOTE: no propeller-loader prevents building propeller-gdb"
-			echo "NOTE: however, a usable propeller-gcc with libs and binutils will be installed"
-		fi
 		return
 	fi		
 
@@ -243,6 +236,19 @@ instspin() {
 		stampdone instspin.svn
 	fi
 
+        s=`stamp instspin.patch`
+
+        if [ $s -eq 1 ];
+        then
+                echo "NOTE: Skipping patching - already done"
+        else
+		cd $BASE_DIR/open-source-spin-compiler
+	        patch -p0 < $PATCH_DIR/open-source-spin-compiler.patch || die "Failed to apply patch"
+		cd $BASE_DIR
+
+                stampdone instspin.patch 
+        fi
+
 	s=`stamp instspin.build`
 
 	if [ $s -eq 1 ];
@@ -251,7 +257,7 @@ instspin() {
 	else
 		cd $BASE_DIR/open-source-spin-compiler
 		make 2>> $LOG >> $LOG || die "Build Failed"
-		cp spin $INST_DIR/bin/. || die "Unable to copy binary to $INST_BIN/bin"
+		cp openspin $INST_DIR/bin/. || die "Unable to copy binary to $INST_BIN/bin"
 		stampdone instspin.build
 	fi
 }
@@ -292,22 +298,18 @@ instgcc() {
 		stampdone instgcc.hg
 	fi
 
-	if [ "X$USE_LOADER_HACK" = "X1" ] && ! [ "X$MACHINE" = "Xintel" ];
-	then
+	s=`stamp instgcc.patch`
 
-		echo "NOTE: propeller-loader hack enabled."
-		echo "NOTE: this will copy some prebuild SPIN-binaries to the build path."
-		echo "NOTE: using the hack may fail, but if it works, propeller-loader and gdb are build."
+        if [ $s -eq 1 ];
+        then
+                echo "NOTE: Skipping patching - already done"
+        else
+		cd $BASE_DIR/propgcc
+	        patch -p1 < $PATCH_DIR/propgcc.patch || die "Failed to apply patch"
+		cd $BASE_DIR
 
-		s=`stamp instgcc.lhack`
-		if [ $s -eq 1 ];
-		then 
-			echo "NOTE: Skipping loader hack copy - already done"
-		else
-			cp -r $PATCH_DIR/build $BASE_DIR 
-			stampdone instgcc.lhack
-		fi
-	fi
+                stampdone instgcc.patch 
+        fi
 
 	s=`stamp instgcc.build`
 
@@ -315,11 +317,12 @@ instgcc() {
 	then 
 		echo "NOTE: Skipping building - already done"
 	else
-		cd ./propgcc || die "Unable to CD to propgcc"
+		cd $BASE_DIR/propgcc || die "Unable to CD to propgcc"
 
 		export PATH=$INST_DIR/bin:$PATH
 
-		./jbuild.sh $JBUILD_OPTS 2>> $LOG >> $LOG
+		# ./jbuild.sh $JBUILD_OPTS 2>> $LOG >> $LOG
+		make $MAKE_OPTS 2>> $LOG >> $LOG
 
 		if ! [ "X$MACHINE" = "Xintel" ];
 		then
@@ -425,7 +428,7 @@ then
 	instspinloader
 fi
 
-if [ $INSTALL_BST = 1 ];
+if [ $INSTALL_GCC = 1 ];
 then
 	instgcc
 fi

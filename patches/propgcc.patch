@@ -1,0 +1,531 @@
+diff -r b6291402029e binutils/bfd/doc/bfd.texinfo
+--- a/binutils/bfd/doc/bfd.texinfo	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/bfd/doc/bfd.texinfo	Mon Sep 01 21:43:05 2014 +0200
+@@ -322,7 +322,7 @@
+ @printindex cp
+ 
+ @tex
+-% I think something like @colophon should be in texinfo.  In the
++% I think something like @@colophon should be in texinfo.  In the
+ % meantime:
+ \long\def\colophon{\hbox to0pt{}\vfill
+ \centerline{The body of this manual is set in}
+@@ -333,7 +333,7 @@
+ \centerline{{\sl\fontname\tensl\/}}
+ \centerline{are used for emphasis.}\vfill}
+ \page\colophon
+-% Blame: doc@cygnus.com, 28mar91.
++% Blame: doc@@cygnus.com, 28mar91.
+ @end tex
+ 
+ @bye
+diff -r b6291402029e binutils/binutils/doc/binutils.texi
+--- a/binutils/binutils/doc/binutils.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/binutils/doc/binutils.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -2914,7 +2914,7 @@
+ @c man end
+ @end ignore
+ 
+-@node c++filt, addr2line, elfedit, Top
++@node c++filt, addr2line, strip, Top
+ @chapter c++filt
+ 
+ @kindex c++filt
+@@ -4391,7 +4391,7 @@
+ 
+ @table @env
+ 
+-@itemx --input-mach=@var{machine}
++@item --input-mach=@var{machine}
+ Set the matching input ELF machine type to @var{machine}.  If
+ @option{--input-mach} isn't specified, it will match any ELF
+ machine types.
+@@ -4399,21 +4399,21 @@
+ The supported ELF machine types are, @var{L1OM}, @var{K1OM} and
+ @var{x86-64}.
+ 
+-@itemx --output-mach=@var{machine}
++@item --output-mach=@var{machine}
+ Change the ELF machine type in the ELF header to @var{machine}.  The
+ supported ELF machine types are the same as @option{--input-mach}.
+ 
+-@itemx --input-type=@var{type}
++@item --input-type=@var{type}
+ Set the matching input ELF file type to @var{type}.  If
+ @option{--input-type} isn't specified, it will match any ELF file types.
+ 
+ The supported ELF file types are, @var{rel}, @var{exec} and @var{dyn}.
+ 
+-@itemx --output-type=@var{type}
++@item --output-type=@var{type}
+ Change the ELF file type in the ELF header to @var{type}.  The
+ supported ELF types are the same as @option{--input-type}.
+ 
+-@itemx --input-osabi=@var{osabi}
++@item --input-osabi=@var{osabi}
+ Set the matching input ELF file OSABI to @var{osabi}.  If
+ @option{--input-osabi} isn't specified, it will match any ELF OSABIs.
+ 
+@@ -4423,7 +4423,7 @@
+ @var{FreeBSD}, @var{TRU64}, @var{Modesto}, @var{OpenBSD}, @var{OpenVMS},
+ @var{NSK}, @var{AROS} and @var{FenixOS}.
+ 
+-@itemx --output-osabi=@var{osabi}
++@item --output-osabi=@var{osabi}
+ Change the ELF OSABI in the ELF header to @var{osabi}.  The
+ supported ELF OSABI are the same as @option{--input-osabi}.
+ 
+diff -r b6291402029e binutils/gas/doc/c-arc.texi
+--- a/binutils/gas/doc/c-arc.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/gas/doc/c-arc.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -220,7 +220,7 @@
+ encodings for use of these instructions according to the specification
+ by the user.  The parameters are:
+ 
+-@table @bullet
++@table @code
+ @item @var{name}
+ Name of the extension instruction 
+ 
+diff -r b6291402029e binutils/gas/doc/c-arm.texi
+--- a/binutils/gas/doc/c-arm.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/gas/doc/c-arm.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -19,7 +19,6 @@
+ @menu
+ * ARM Options::              Options
+ * ARM Syntax::               Syntax
+-* ARM Floating Point::       Floating Point
+ * ARM Directives::           ARM Machine Directives
+ * ARM Opcodes::              Opcodes
+ * ARM Mapping Symbols::      Mapping Symbols
+@@ -388,7 +387,7 @@
+ @code{unified} syntax, which can be selected via the @code{.syntax}
+ directive, and has the following main features:
+ 
+-@table @bullet
++@table @code
+ @item
+ Immediate operands do not require a @code{#} prefix.
+ 
+@@ -464,7 +463,6 @@
+         vld1.8 @{q0@}, [r0, :128]
+ @end smallexample
+ 
+-@node ARM Floating Point
+ @section Floating Point
+ 
+ @cindex floating point, ARM (@sc{ieee})
+diff -r b6291402029e binutils/gas/doc/c-mips.texi
+--- a/binutils/gas/doc/c-mips.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/gas/doc/c-mips.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -234,7 +234,7 @@
+ instructions around accesses to the @samp{HI} and @samp{LO} registers.
+ @samp{-no-m4650} turns off this option.
+ 
+-@itemx -m3900
++@item -m3900
+ @itemx -no-m3900
+ @itemx -m4100
+ @itemx -no-m4100
+@@ -369,7 +369,7 @@
+ operations.
+ 
+ @item --construct-floats
+-@itemx --no-construct-floats
++@item --no-construct-floats
+ The @code{--no-construct-floats} option disables the construction of
+ double width floating point constants by loading the two halves of the
+ value into the two single width floating point registers that make up
+@@ -382,7 +382,7 @@
+ of these floating point constants.
+ 
+ @item --trap
+-@itemx --no-break
++@item --no-break
+ @c FIXME!  (1) reflect these options (next item too) in option summaries;
+ @c         (2) stop teasing, say _which_ instructions expanded _how_.
+ @code{@value{AS}} automatically macro expands certain division and
+@@ -392,7 +392,7 @@
+ are only supported at Instruction Set Architecture level 2 and higher.
+ 
+ @item --break
+-@itemx --no-trap
++@item --no-trap
+ Generate code to take a break exception rather than a trap exception when an
+ error is detected.  This is the default.
+ 
+diff -r b6291402029e binutils/gas/doc/c-score.texi
+--- a/binutils/gas/doc/c-score.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/gas/doc/c-score.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -37,7 +37,7 @@
+ @item -EB
+ Assemble code for a big-endian cpu
+ 
+-@itemx -EL
++@item -EL
+ Assemble code for a little-endian cpu
+ 
+ @item -FIXDD 
+@@ -49,13 +49,13 @@
+ @item -SCORE5
+ Assemble code for target is SCORE5
+ 
+-@itemx -SCORE5U
++@item -SCORE5U
+ Assemble code for target is SCORE5U
+ 
+-@itemx -SCORE7
++@item -SCORE7
+ Assemble code for target is SCORE7, this is default setting
+ 
+-@itemx -SCORE3
++@item -SCORE3
+ Assemble code for target is SCORE3
+ 
+ @item -march=score7
+diff -r b6291402029e binutils/gas/doc/c-tic54x.texi
+--- a/binutils/gas/doc/c-tic54x.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/gas/doc/c-tic54x.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -109,13 +109,6 @@
+ is replaced with x.  At this point, x has already been encountered
+ and the substitution stops.
+ 
+-@smallexample @code
+- .asg   "x",SYM1 
+- .asg   "SYM1",SYM2
+- .asg   "SYM2",x
+- add    x,a             ; final code assembled is "add  x, a"
+-@end smallexample
+-
+ Macro parameters are converted to subsyms; a side effect of this is the normal
+ @code{@value{AS}} '\ARG' dereferencing syntax is unnecessary.  Subsyms
+ defined within a macro will have global scope, unless the @code{.var}
+@@ -126,17 +119,8 @@
+ ambiguous by placing colons on either side of the subsym.  The following
+ code: 
+ 
+-@smallexample @code
+- .eval  "10",x
+-LAB:X:  add     #x, a
+-@end smallexample
+-
+ When assembled becomes:
+ 
+-@smallexample @code
+-LAB10  add     #10, a
+-@end smallexample
+-
+ Smaller parts of the string assigned to a subsym may be accessed with
+ the following syntax:
+ 
+@@ -309,11 +293,6 @@
+ of a label or address.  For example, if an address @code{_label} resides
+ in extended program memory, the value of @code{_label} may be loaded as
+ follows:
+-@smallexample @code
+- ldx     #_label,16,a    ; loads extended bits of _label
+- or      #_label,a       ; loads lower 16 bits of _label
+- bacc    a               ; full address is in accumulator A
+-@end smallexample
+ 
+ @node TIC54X-Directives
+ @section Directives
+@@ -326,7 +305,7 @@
+ @cindex @code{align} directive, TIC54X
+ @cindex @code{even} directive, TIC54X
+ @item .align [@var{size}]
+-@itemx .even
++@item .even
+ Align the section program counter on the next boundary, based on
+ @var{size}.  @var{size} may be any power of 2.  @code{.even} is
+ equivalent to @code{.align} with a @var{size} of 2.
+@@ -345,7 +324,7 @@
+ performed on @var{string} before assignment.
+ 
+ @cindex @code{eval} directive, TIC54X
+-@itemx .eval @var{string}, @var{name}
++@item .eval @var{string}, @var{name}
+ Evaluate the contents of string @var{string} and assign the result as a
+ string to the subsym @var{name}.  String replacement is performed on
+ @var{string} before assignment. 
+diff -r b6291402029e binutils/ld/ld.texinfo
+--- a/binutils/ld/ld.texinfo	Sat Aug 30 23:15:37 2014 -0400
++++ b/binutils/ld/ld.texinfo	Mon Sep 01 21:43:05 2014 +0200
+@@ -5991,6 +5991,9 @@
+ @ifset I960
+ * i960::                        @command{ld} and the Intel 960 family
+ @end ifset
++@ifset M68HC11
++* M68HC11/68HC12::             @code{ld} and the Motorola 68HC11 and 68HC12 families
++@end ifset
+ @ifset ARM
+ * ARM::				@command{ld} and the ARM family
+ @end ifset
+@@ -7856,7 +7859,7 @@
+ @printindex cp
+ 
+ @tex
+-% I think something like @colophon should be in texinfo.  In the
++% I think something like @@colophon should be in texinfo.  In the
+ % meantime:
+ \long\def\colophon{\hbox to0pt{}\vfill
+ \centerline{The body of this manual is set in}
+@@ -7867,7 +7870,7 @@
+ \centerline{{\sl\fontname\tensl\/}}
+ \centerline{are used for emphasis.}\vfill}
+ \page\colophon
+-% Blame: doc@cygnus.com, 28mar91.
++% Blame: doc@@cygnus.com, 28mar91.
+ @end tex
+ 
+ @bye
+diff -r b6291402029e gcc/gcc/doc/cppopts.texi
+--- a/gcc/gcc/doc/cppopts.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/gcc/gcc/doc/cppopts.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -769,7 +769,7 @@
+ Enable special code to work around file systems which only permit very
+ short file names, such as MS-DOS@.
+ 
+-@itemx --help
++@item --help
+ @itemx --target-help
+ @opindex help
+ @opindex target-help
+diff -r b6291402029e gcc/gcc/doc/generic.texi
+--- a/gcc/gcc/doc/generic.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/gcc/gcc/doc/generic.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -1415,13 +1415,13 @@
+ not matter.  The type of the operands and that of the result are
+ always of @code{BOOLEAN_TYPE} or @code{INTEGER_TYPE}.
+ 
+-@itemx POINTER_PLUS_EXPR
++@item POINTER_PLUS_EXPR
+ This node represents pointer arithmetic.  The first operand is always
+ a pointer/reference type.  The second operand is always an unsigned
+ integer type compatible with sizetype.  This is the only binary
+ arithmetic operand that can operate on pointer types.
+ 
+-@itemx PLUS_EXPR
++@item PLUS_EXPR
+ @itemx MINUS_EXPR
+ @itemx MULT_EXPR
+ These nodes represent various binary arithmetic operations.
+diff -r b6291402029e gcc/gcc/doc/invoke.texi
+--- a/gcc/gcc/doc/invoke.texi	Sat Aug 30 23:15:37 2014 -0400
++++ b/gcc/gcc/doc/invoke.texi	Mon Sep 01 21:43:05 2014 +0200
+@@ -165,7 +165,7 @@
+ -pipe  -pass-exit-codes  @gol
+ -x @var{language}  -v  -###  --help@r{[}=@var{class}@r{[},@dots{}@r{]]}  --target-help  @gol
+ --version -wrapper @@@var{file} -fplugin=@var{file} -fplugin-arg-@var{name}=@var{arg}  @gol
+--fdump-ada-spec@r{[}-slim@r{]}} -fdump-go-spec=@var{file}
++-fdump-ada-spec@r{[}-slim@r{]} -fdump-go-spec=@var{file}}
+ 
+ @item C Language Options
+ @xref{C Dialect Options,,Options Controlling C Dialect}.
+@@ -5012,7 +5012,7 @@
+ and dbg_cnt(tail_call) will return false always.
+ 
+ @item -d@var{letters}
+-@itemx -fdump-rtl-@var{pass}
++@item -fdump-rtl-@var{pass}
+ @opindex d
+ Says to make debugging dumps during compilation at times specified by
+ @var{letters}.  This is used for debugging the RTL-based passes of the
+@@ -5060,7 +5060,7 @@
+ Dump after block reordering.
+ 
+ @item -fdump-rtl-btl1
+-@itemx -fdump-rtl-btl2
++@item -fdump-rtl-btl2
+ @opindex fdump-rtl-btl2
+ @opindex fdump-rtl-btl2
+ @option{-fdump-rtl-btl1} and @option{-fdump-rtl-btl2} enable dumping
+@@ -5080,8 +5080,8 @@
+ Dump after duplicating the computed gotos.
+ 
+ @item -fdump-rtl-ce1
+-@itemx -fdump-rtl-ce2
+-@itemx -fdump-rtl-ce3
++@item -fdump-rtl-ce2
++@item -fdump-rtl-ce3
+ @opindex fdump-rtl-ce1
+ @opindex fdump-rtl-ce2
+ @opindex fdump-rtl-ce3
+@@ -5089,31 +5089,31 @@
+ @option{-fdump-rtl-ce3} enable dumping after the three
+ if conversion passes.
+ 
+-@itemx -fdump-rtl-cprop_hardreg
++@item -fdump-rtl-cprop_hardreg
+ @opindex fdump-rtl-cprop_hardreg
+ Dump after hard register copy propagation.
+ 
+-@itemx -fdump-rtl-csa
++@item -fdump-rtl-csa
+ @opindex fdump-rtl-csa
+ Dump after combining stack adjustments.
+ 
+ @item -fdump-rtl-cse1
+-@itemx -fdump-rtl-cse2
++@item -fdump-rtl-cse2
+ @opindex fdump-rtl-cse1
+ @opindex fdump-rtl-cse2
+ @option{-fdump-rtl-cse1} and @option{-fdump-rtl-cse2} enable dumping after
+ the two common sub-expression elimination passes.
+ 
+-@itemx -fdump-rtl-dce
++@item -fdump-rtl-dce
+ @opindex fdump-rtl-dce
+ Dump after the standalone dead code elimination passes.
+ 
+-@itemx -fdump-rtl-dbr
++@item -fdump-rtl-dbr
+ @opindex fdump-rtl-dbr
+ Dump after delayed branch scheduling.
+ 
+ @item -fdump-rtl-dce1
+-@itemx -fdump-rtl-dce2
++@item -fdump-rtl-dce2
+ @opindex fdump-rtl-dce1
+ @opindex fdump-rtl-dce2
+ @option{-fdump-rtl-dce1} and @option{-fdump-rtl-dce2} enable dumping after
+@@ -5132,14 +5132,14 @@
+ Dump after RTL generation.
+ 
+ @item -fdump-rtl-fwprop1
+-@itemx -fdump-rtl-fwprop2
++@item -fdump-rtl-fwprop2
+ @opindex fdump-rtl-fwprop1
+ @opindex fdump-rtl-fwprop2
+ @option{-fdump-rtl-fwprop1} and @option{-fdump-rtl-fwprop2} enable
+ dumping after the two forward propagation passes.
+ 
+ @item -fdump-rtl-gcse1
+-@itemx -fdump-rtl-gcse2
++@item -fdump-rtl-gcse2
+ @opindex fdump-rtl-gcse1
+ @opindex fdump-rtl-gcse2
+ @option{-fdump-rtl-gcse1} and @option{-fdump-rtl-gcse2} enable dumping
+@@ -5153,7 +5153,7 @@
+ @opindex fdump-rtl-initvals
+ Dump after the computation of the initial value sets.
+ 
+-@itemx -fdump-rtl-into_cfglayout
++@item -fdump-rtl-into_cfglayout
+ @opindex fdump-rtl-into_cfglayout
+ Dump after converting to cfglayout mode.
+ 
+@@ -5183,7 +5183,7 @@
+ @opindex fdump-rtl-rnreg
+ Dump after register renumbering.
+ 
+-@itemx -fdump-rtl-outof_cfglayout
++@item -fdump-rtl-outof_cfglayout
+ @opindex fdump-rtl-outof_cfglayout
+ Dump after converting from cfglayout mode.
+ 
+@@ -5195,7 +5195,7 @@
+ @opindex fdump-rtl-postreload
+ Dump after post-reload optimizations.
+ 
+-@itemx -fdump-rtl-pro_and_epilogue
++@item -fdump-rtl-pro_and_epilogue
+ @opindex fdump-rtl-pro_and_epilogue
+ Dump after generating the function pro and epilogues.
+ 
+@@ -5204,7 +5204,7 @@
+ Dump after the register move pass.
+ 
+ @item -fdump-rtl-sched1
+-@itemx -fdump-rtl-sched2
++@item -fdump-rtl-sched2
+ @opindex fdump-rtl-sched1
+ @opindex fdump-rtl-sched2
+ @option{-fdump-rtl-sched1} and @option{-fdump-rtl-sched2} enable dumping
+@@ -5227,10 +5227,10 @@
+ Dump after sibling call optimizations.
+ 
+ @item -fdump-rtl-split1
+-@itemx -fdump-rtl-split2
+-@itemx -fdump-rtl-split3
+-@itemx -fdump-rtl-split4
+-@itemx -fdump-rtl-split5
++@item -fdump-rtl-split2
++@item -fdump-rtl-split3
++@item -fdump-rtl-split4
++@item -fdump-rtl-split5
+ @opindex fdump-rtl-split1
+ @opindex fdump-rtl-split2
+ @opindex fdump-rtl-split3
+@@ -5252,7 +5252,7 @@
+ x87's stack-like registers.  This pass is only run on x86 variants.
+ 
+ @item -fdump-rtl-subreg1
+-@itemx -fdump-rtl-subreg2
++@item -fdump-rtl-subreg2
+ @opindex fdump-rtl-subreg1
+ @opindex fdump-rtl-subreg2
+ @option{-fdump-rtl-subreg1} and @option{-fdump-rtl-subreg2} enable dumping after
+@@ -5275,10 +5275,10 @@
+ Dump after live range splitting.
+ 
+ @item -fdump-rtl-regclass
+-@itemx -fdump-rtl-subregs_of_mode_init
+-@itemx -fdump-rtl-subregs_of_mode_finish
+-@itemx -fdump-rtl-dfinit
+-@itemx -fdump-rtl-dfinish
++@item -fdump-rtl-subregs_of_mode_init
++@item -fdump-rtl-subregs_of_mode_finish
++@item -fdump-rtl-dfinit
++@item -fdump-rtl-dfinish
+ @opindex fdump-rtl-regclass
+ @opindex fdump-rtl-subregs_of_mode_init
+ @opindex fdump-rtl-subregs_of_mode_finish
+@@ -5352,7 +5352,7 @@
+ in a sequence.
+ 
+ @item -fdump-translation-unit @r{(C++ only)}
+-@itemx -fdump-translation-unit-@var{options} @r{(C++ only)}
++@item -fdump-translation-unit-@var{options} @r{(C++ only)}
+ @opindex fdump-translation-unit
+ Dump a representation of the tree structure for the entire translation
+ unit to a file.  The file name is made by appending @file{.tu} to the
+@@ -5362,7 +5362,7 @@
+ @option{-fdump-tree} options.
+ 
+ @item -fdump-class-hierarchy @r{(C++ only)}
+-@itemx -fdump-class-hierarchy-@var{options} @r{(C++ only)}
++@item -fdump-class-hierarchy-@var{options} @r{(C++ only)}
+ @opindex fdump-class-hierarchy
+ Dump a representation of each class's hierarchy and virtual function
+ table layout to a file.  The file name is made by appending
+@@ -5404,7 +5404,7 @@
+ counters for each function compiled.
+ 
+ @item -fdump-tree-@var{switch}
+-@itemx -fdump-tree-@var{switch}-@var{options}
++@item -fdump-tree-@var{switch}-@var{options}
+ @opindex fdump-tree
+ Control the dumping at various stages of processing the intermediate
+ language tree to a file.  The file name is generated by appending a
+diff -r b6291402029e gdb/bfd/doc/bfd.texinfo
+--- a/gdb/bfd/doc/bfd.texinfo	Sat Aug 30 23:15:37 2014 -0400
++++ b/gdb/bfd/doc/bfd.texinfo	Mon Sep 01 21:43:05 2014 +0200
+@@ -322,7 +322,7 @@
+ @printindex cp
+ 
+ @tex
+-% I think something like @colophon should be in texinfo.  In the
++% I think something like @@colophon should be in texinfo.  In the
+ % meantime:
+ \long\def\colophon{\hbox to0pt{}\vfill
+ \centerline{The body of this manual is set in}
+@@ -333,7 +333,7 @@
+ \centerline{{\sl\fontname\tensl\/}}
+ \centerline{are used for emphasis.}\vfill}
+ \page\colophon
+-% Blame: doc@cygnus.com, 28mar91.
++% Blame: doc@@cygnus.com, 28mar91.
+ @end tex
+ 
+ @bye

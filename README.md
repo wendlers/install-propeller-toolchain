@@ -29,6 +29,12 @@ The Python based loader is from Remy Blank and I was not able to find a web-page
 For more information on spin2cpp see the [project page] (http://code.google.com/p/spin2cpp/)
 
 
+The latest version of this script was tested with Ubuntu 14.04 LTS (64bit, but 32bit shoudl work too).
+It looks like the "makeinfo" on Ubuntu 14.04 is not happy with the ".texi" files of the binutils and gcc provided
+by Parallax. Thus some patches are applied to fix this issue. I am not sure if the patch works with older "makeinfo" 
+versions too. 
+
+
 Non Intel Build Hosts
 ---------------------
 
@@ -37,10 +43,6 @@ propeller-loader tool relays on the bstc.Linux binary which is a Intel binary. A
 the loader fails to build, no propeller-gdb will be build since it relays on the loader library.
 However, on a ARM machine you will end up with a working propeller-gcc including working C-libraries
 and binutils, but you will not get the loader nor gdb. 
-
-However, it is possible to copy the SPIN binaries generated on a Intel platform to the non 
-Intel build host, and make propeller-loader and gdb compile. If you like to try that, you
-could enable "USE_LOADER_HACK" in the "config.inc" file.
 
 
 Requirements
@@ -52,6 +54,11 @@ Requirements
 * For the python based loader, python2.6 with py-serial is required
 * SVN is required to build the open-source-spin-compiler.
 
+NOTE: if you are on a 64bit platform an you are going to install BST Tools, you need to 
+make sure to install the required i386 libraries since BST binaries are 32bit only. On
+Ubuntu 14.04 the following should do the trick:
+
+	sudo apt-get install libgtk2.0-0:i386
 
 Usage
 -----
