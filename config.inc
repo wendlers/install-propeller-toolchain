@@ -39,7 +39,7 @@ URL_BSTC="http://www.fnarfbargle.com/bst/bstc/Latest/bstc-0.15.3.linux.zip"
 URL_BSTL="http://www.fnarfbargle.com/bst/bstl/Latest/bstl.linux.zip"
 URL_BST="http://www.fnarfbargle.com/bst/Latest/bst-0.19.3.linux.zip"
 URL_PROPBAS="http://www.fnarfbargle.com/PropBasic/PropBasic-bst-00.01.14-79.linux.zip"
-URL_FONT="http://forums.parallax.com/attachment.php?attachmentid=53903&d=1212437073"
+URL_FONT="http://forums.parallax.com/discussion/download/41223/Parallax Font.zip"
 
 ##
 # URL for mercurial repo of propgcc

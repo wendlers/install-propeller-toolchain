@@ -214,7 +214,7 @@ instbst() {
 
 	cd $FONT_DIR || die "Unable to CD to $FONT_DIR"
  
-	sudo unzip -o $DL_DIR/Parallax.ttf.zip 2>> $LOG >> $LOG || die "Unable to extract Parallax TTF"
+	sudo unzip -o $DL_DIR/"Parallax Font.zip" 2>> $LOG >> $LOG || die "Unable to extract Parallax TTF"
 	sudo fc-cache -f -v . 2>> $LOG >> $LOG || die "Unable to update font cache"
 
 	stampdone instbst
